@@ -21,6 +21,9 @@ class ItemBase(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.subject
+
 class Course (ItemBase):
     class Meta:
         unique_together = ('subject', 'category')
@@ -29,9 +32,18 @@ class Course (ItemBase):
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Lesson(ItemBase):
     class Meta:
         unique_together = ('subject', 'course')
 
     content = models.TextField()
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name="lessons", on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, related_name="lessons", blank=True, null=True)
+
+
