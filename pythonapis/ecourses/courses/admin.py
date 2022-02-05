@@ -16,7 +16,7 @@ class CourseAdmin(admin.ModelAdmin):
     readonly_fields = ["avatar"]
 
     def avatar(self, course):
-        return mark_safe('<img src="/static/{img_url}" alt="{alt}" width="120px" />').format(img_url=course.image.name, alt=course.subject)
+        return mark_safe(('<img src="/static/{img_url}" alt="{alt}" width="120px" />').format(img_url=course.image.name, alt=course.subject))
 
 # Register your models here.
 admin.site.register(Category)
