@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
 
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='uploads/%Y/%m')
@@ -42,7 +43,7 @@ class Lesson(ItemBase):
     class Meta:
         unique_together = ('subject', 'course')
 
-    content = models.TextField()
+    content = RichTextField()
     course = models.ForeignKey(Course, related_name="lessons", on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name="lessons", blank=True, null=True)
 
